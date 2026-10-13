@@ -1,0 +1,59 @@
+"""Request/response schemas for the /auth endpoints.
+
+Format/shape validation (length, character composition) belongs entirely
+here, in Pydantic — the service layer only adds checks that genuinely need
+database state (email uniqueness, code correctness), so the two never
+duplicate the same rule.
+"""
+
+from __future__ import annotations
+
+from pydantic import BaseModel, EmailStr, Field, field_validator
+
+from app.schemas.user import UserRead
+
+
+class RegisterRequest(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=8, max_length=72)
+    full_name: str = Field(min_length=1, max_length=255)
+
+    @field_validator("password")
+    @classmethod
+    def _password_strength(cls, value: str) -> str:
+        if not any(c.isalpha() for c in value) or not any(c.isdigit() for c in value):
+            raise ValueError("La contrasena debe combinar letras y numeros.")
+        # bcrypt only looks at the first 72 BYTES (not characters): accented
+        # letters take 2 bytes each, so max_length alone is not enough.
+        if len(value.encode("utf-8")) > 72:
+            raise ValueError("La contrasena no puede superar los 72 bytes.")
+        return value
+
+
+class RegisterResponse(BaseModel):
+    message: str
+    user: UserRead
+
+
+class VerifyRequest(BaseModel):
+    email: EmailStr
+    code: str = Field(min_length=4, max_length=10)
+
+
+class ResendVerificationRequest(BaseModel):
+    email: EmailStr
+
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class LoginResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: UserRead
+
+
+class MessageResponse(BaseModel):
+    message: str
