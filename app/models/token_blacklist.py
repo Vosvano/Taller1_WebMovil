@@ -8,8 +8,7 @@ user's own state on every request instead. See app/models/user.py.
 
 from __future__ import annotations
 
-from datetime import datetime
-
+from pydantic import NaiveDatetime
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlmodel import Field, SQLModel
 
@@ -26,5 +25,5 @@ class TokenBlacklist(SQLModel, table=True):
     user_id: int = Field(
         sa_column=Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     )
-    expires_at: datetime
-    revoked_at: datetime = Field(default_factory=utcnow)
+    expires_at: NaiveDatetime
+    revoked_at: NaiveDatetime = Field(default_factory=utcnow)

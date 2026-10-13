@@ -6,9 +6,9 @@ order_item.py for why.
 
 from __future__ import annotations
 
-from datetime import datetime
 from decimal import Decimal
 
+from pydantic import NaiveDatetime
 from sqlalchemy import Column, ForeignKey, Integer, UniqueConstraint
 from sqlmodel import Field, SQLModel
 
@@ -46,7 +46,7 @@ class Order(SQLModel, table=True):
     discount_total: Decimal = Field(max_digits=10, decimal_places=2)
     total: Decimal = Field(max_digits=10, decimal_places=2)
     idempotency_key: str = Field(max_length=100)
-    created_at: datetime = Field(default_factory=utcnow)
-    paid_at: datetime = Field(default_factory=utcnow)
+    created_at: NaiveDatetime = Field(default_factory=utcnow)
+    paid_at: NaiveDatetime = Field(default_factory=utcnow)
     receipt_path: str | None = Field(default=None, max_length=500)
-    receipt_sent_at: datetime | None = Field(default=None)
+    receipt_sent_at: NaiveDatetime | None = Field(default=None)

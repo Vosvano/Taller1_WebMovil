@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
-
+from pydantic import NaiveDatetime
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlmodel import Field, SQLModel
 
@@ -26,6 +25,6 @@ class Offer(SQLModel, table=True):
         sa_column=Column(Integer, ForeignKey("games.id", ondelete="CASCADE"), nullable=False)
     )
     discount_percent: int = Field(ge=1, le=90)
-    starts_at: datetime
-    ends_at: datetime
+    starts_at: NaiveDatetime
+    ends_at: NaiveDatetime
     is_active: bool = Field(default=True)

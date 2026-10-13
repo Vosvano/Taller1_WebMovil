@@ -8,8 +8,7 @@ model only stores the state the service needs to check.
 
 from __future__ import annotations
 
-from datetime import datetime
-
+from pydantic import NaiveDatetime
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlmodel import Field, SQLModel
 
@@ -29,7 +28,7 @@ class VerificationCode(SQLModel, table=True):
         sa_column=Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     )
     code_hash: str = Field(max_length=255)
-    expires_at: datetime
-    consumed_at: datetime | None = Field(default=None)
-    invalidated_at: datetime | None = Field(default=None)
-    created_at: datetime = Field(default_factory=utcnow)
+    expires_at: NaiveDatetime
+    consumed_at: NaiveDatetime | None = Field(default=None)
+    invalidated_at: NaiveDatetime | None = Field(default=None)
+    created_at: NaiveDatetime = Field(default_factory=utcnow)

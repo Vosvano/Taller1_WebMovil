@@ -6,8 +6,7 @@ purchase prevention (Fase 5).
 
 from __future__ import annotations
 
-from datetime import datetime
-
+from pydantic import NaiveDatetime
 from sqlalchemy import Column, ForeignKey, Integer, UniqueConstraint
 from sqlmodel import Field, SQLModel
 
@@ -35,4 +34,4 @@ class LibraryItem(SQLModel, table=True):
     order_id: int = Field(
         sa_column=Column(Integer, ForeignKey("orders.id", ondelete="RESTRICT"), nullable=False)
     )
-    acquired_at: datetime = Field(default_factory=utcnow)
+    acquired_at: NaiveDatetime = Field(default_factory=utcnow)

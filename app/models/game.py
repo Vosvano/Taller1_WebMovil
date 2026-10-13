@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date
 from decimal import Decimal
 
+from pydantic import NaiveDatetime
 from sqlmodel import Field, SQLModel
 
 from app.core.time import utcnow
@@ -31,6 +32,6 @@ class Game(SQLModel, table=True):
     release_date: date | None = Field(default=None)
     base_price: Decimal = Field(max_digits=10, decimal_places=2)
     is_active: bool = Field(default=True)
-    deleted_at: datetime | None = Field(default=None)
-    created_at: datetime = Field(default_factory=utcnow)
-    updated_at: datetime = Field(default_factory=utcnow)
+    deleted_at: NaiveDatetime | None = Field(default=None)
+    created_at: NaiveDatetime = Field(default_factory=utcnow)
+    updated_at: NaiveDatetime = Field(default_factory=utcnow)

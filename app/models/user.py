@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
-
+from pydantic import NaiveDatetime
 from sqlalchemy import Column
 from sqlmodel import Field, SQLModel
 
@@ -40,11 +39,11 @@ class User(SQLModel, table=True):
 
     is_verified: bool = Field(default=False)
     is_suspended: bool = Field(default=False)
-    suspended_at: datetime | None = Field(default=None)
+    suspended_at: NaiveDatetime | None = Field(default=None)
     suspension_reason: str | None = Field(default=None, max_length=500)
 
     verification_attempts: int = Field(default=0)
-    verification_blocked_until: datetime | None = Field(default=None)
+    verification_blocked_until: NaiveDatetime | None = Field(default=None)
 
-    created_at: datetime = Field(default_factory=utcnow)
-    updated_at: datetime = Field(default_factory=utcnow)
+    created_at: NaiveDatetime = Field(default_factory=utcnow)
+    updated_at: NaiveDatetime = Field(default_factory=utcnow)

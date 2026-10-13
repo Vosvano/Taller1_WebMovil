@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
-
+from pydantic import NaiveDatetime
 from sqlmodel import Field, SQLModel
 
 
@@ -21,4 +20,4 @@ class Category(SQLModel, table=True):
     name: str = Field(unique=True, max_length=100)
     slug: str = Field(unique=True, max_length=120, index=True)
     description: str | None = Field(default=None, max_length=500)
-    deleted_at: datetime | None = Field(default=None)
+    deleted_at: NaiveDatetime | None = Field(default=None)

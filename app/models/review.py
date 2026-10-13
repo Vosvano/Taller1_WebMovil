@@ -5,8 +5,7 @@ One review per user per game; soft-deleted, never hard-deleted.
 
 from __future__ import annotations
 
-from datetime import datetime
-
+from pydantic import NaiveDatetime
 from sqlalchemy import Column, ForeignKey, Integer, UniqueConstraint
 from sqlmodel import Field, SQLModel
 
@@ -33,6 +32,6 @@ class Review(SQLModel, table=True):
     )
     rating: int = Field(ge=1, le=5)
     comment: str | None = Field(default=None, max_length=2000)
-    deleted_at: datetime | None = Field(default=None)
-    created_at: datetime = Field(default_factory=utcnow)
-    updated_at: datetime = Field(default_factory=utcnow)
+    deleted_at: NaiveDatetime | None = Field(default=None)
+    created_at: NaiveDatetime = Field(default_factory=utcnow)
+    updated_at: NaiveDatetime = Field(default_factory=utcnow)

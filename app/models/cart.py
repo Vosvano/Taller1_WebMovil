@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
-
+from pydantic import NaiveDatetime
 from sqlalchemy import CheckConstraint, Column, ForeignKey, Integer
 from sqlmodel import Field, SQLModel
 
@@ -37,5 +36,5 @@ class Cart(SQLModel, table=True):
         ),
     )
     session_token: str | None = Field(default=None, unique=True, max_length=64, index=True)
-    created_at: datetime = Field(default_factory=utcnow)
-    updated_at: datetime = Field(default_factory=utcnow)
+    created_at: NaiveDatetime = Field(default_factory=utcnow)
+    updated_at: NaiveDatetime = Field(default_factory=utcnow)

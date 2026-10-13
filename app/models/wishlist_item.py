@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
-
+from pydantic import NaiveDatetime
 from sqlalchemy import Column, ForeignKey, Integer, UniqueConstraint
 from sqlmodel import Field, SQLModel
 
@@ -27,4 +26,4 @@ class WishlistItem(SQLModel, table=True):
     game_id: int = Field(
         sa_column=Column(Integer, ForeignKey("games.id", ondelete="CASCADE"), nullable=False)
     )
-    created_at: datetime = Field(default_factory=utcnow)
+    created_at: NaiveDatetime = Field(default_factory=utcnow)
