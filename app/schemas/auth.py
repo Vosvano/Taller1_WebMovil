@@ -23,8 +23,7 @@ class RegisterRequest(BaseModel):
     def _password_strength(cls, value: str) -> str:
         if not any(c.isalpha() for c in value) or not any(c.isdigit() for c in value):
             raise ValueError("La contrasena debe combinar letras y numeros.")
-        # bcrypt only looks at the first 72 BYTES (not characters): accented
-        # letters take 2 bytes each, so max_length alone is not enough.
+
         if len(value.encode("utf-8")) > 72:
             raise ValueError("La contrasena no puede superar los 72 bytes.")
         return value
