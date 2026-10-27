@@ -18,9 +18,7 @@ SessionDep = Annotated[Session, Depends(get_session)]
 def get_most_wished_games(
     session: SessionDep,
     admin: AdminUser,
-    days: Annotated[
-        int | None, Query(ge=1, description="Período en días (ej: 30). Si se omite, es histórico.")
-    ] = 30,
+    days: Annotated[int | None, Query(ge=1, description="Período en días")] = 30,
     limit: Annotated[int, Query(ge=1, le=50, description="Cantidad máxima de títulos")] = 10,
 ) -> list[MostWishedGame]:
     return admin_stats_service.get_most_wished(session, days=days, limit=limit)
@@ -30,9 +28,7 @@ def get_most_wished_games(
 def get_most_purchased_games(
     session: SessionDep,
     admin: AdminUser,
-    days: Annotated[
-        int | None, Query(ge=1, description="Período en días (ej: 30). Si se omite, es histórico.")
-    ] = 30,
+    days: Annotated[int | None, Query(ge=1, description="Período en días")] = 30,
     limit: Annotated[int, Query(ge=1, le=50, description="Cantidad máxima de títulos")] = 10,
 ) -> list[MostPurchasedGame]:
     return admin_stats_service.get_most_purchased(session, days=days, limit=limit)
