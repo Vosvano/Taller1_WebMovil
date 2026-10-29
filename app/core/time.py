@@ -17,4 +17,4 @@ from datetime import UTC, datetime
 
 def utcnow() -> datetime:
     """Current time in UTC, returned as a naive datetime."""
-    return datetime.now(UTC).replace(tzinfo=None)
+    return datetime.now(UTC)
