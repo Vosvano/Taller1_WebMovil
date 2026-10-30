@@ -22,6 +22,7 @@ from app.routers.admin_stats import router as admin_stats_router
 from app.routers.auth import router as auth_router
 from app.routers.cart import router as cart_router
 from app.routers.catalog import router as catalog_router
+from app.routers.order import router as order_router
 
 
 @asynccontextmanager
@@ -63,6 +64,7 @@ app.include_router(auth_router)
 app.include_router(catalog_router)
 app.include_router(admin_stats_router)
 app.include_router(cart_router)
+app.include_router(order_router)
 
 
 @app.get("/health", tags=["health"])
